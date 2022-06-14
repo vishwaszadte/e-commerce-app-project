@@ -1,12 +1,17 @@
 const express = require("express");
 const multer = require("multer");
 const db = require("./database");
-const userModel = require("./database/models/user");
+const userModelInstance = require("./database/models/user");
+const cartModel = require("./database/models/cart");
 const session = require("express-session");
 const fs = require("fs");
 const mailjet = require ('node-mailjet');
 
+const userModel = userModelInstance.model;
+const userRoleEnums = userModelInstance.userRoleEnums;
+
 const sendMail = require("./utils/sendMail");
+const { updateOne } = require("./database/models/user");
 
 const transporter = mailjet.connect(
     '7b4abcf477976482d9027d1872981b31', 
@@ -30,6 +35,7 @@ db.init();
 
 //middlewares
 app.use(express.static("uploads"))
+app.use(express.static("public"))
 app.use(express.urlencoded());
 app.use(session({
     secret: "secret secret",
@@ -37,6 +43,7 @@ app.use(session({
     saveUninitialized: true
 }))
 app.use(express.json());
+app.use(cors());
 
 
 // multer
@@ -55,8 +62,8 @@ const upload = multer({storage: storage})
 // bad practice
 // app.use(upload.single("profile_pic"))
 
-app.get("/", function(req, res) {
-    res.render("home");
+app.get("/auth", function(req, res) {
+    res.render("auth");
 })
 
 app.route("/login").get(function(req, res) {
@@ -83,15 +90,12 @@ app.route("/login").get(function(req, res) {
             // create the session
             req.session.isLoggedIn = true;
             req.session.user = user;
-            res.redirect("/home");
+            res.redirect("/");
             
         } else {
             res.render("login", {error: "wrong details"});
             return;
         }
-
-        
-
         // console.log(user);
 
         // taking to the homepage
@@ -102,14 +106,18 @@ app.route("/login").get(function(req, res) {
 })
 
 // the homepage after logging in
-app.get("/home", function(req, res) {
-    // only the logged in user will come here
-    const user = req.session.user;
+app.get("/", function(req, res) {
+    // const user = req.session.user;
+
+    var user = null;
+
+    if (req.session.isLoggedIn) {
+        user = req.session.user;
+    }
 
     fs.readFile("products.js", "utf-8", function(err, data) {
         res.render("index", { 
-            name: user.username,
-            pic:  user.profile_pic, 
+            user: user,
             products: JSON.parse(data)
         });
     })
@@ -156,7 +164,8 @@ app.route("/signup").get(function(req, res) {
         username: username, 
         password: password,
         profile_pic: file ? file.filename: "profile_pic-1649695341010-454886408", 
-        isVerifiedMail: false
+        isVerifiedMail: false,
+        userType: userRoleEnums.customer
     }).then(function() {
 
         var html = '<h1>Click <a href="http://localhost:3000/verifyUser/'+username+'">here</a> to verify your email</h1>'
@@ -234,7 +243,7 @@ app.post("/changePassword", function(req, res) {
     if (!username) {
         res.render("changePassword", {error: "Please enter username"});
         return;
-    }
+    } 
     if (!newPassword) {
         res.render("changePassword", {error: "Please enter password"});
         return;
@@ -250,6 +259,121 @@ app.post("/changePassword", function(req, res) {
     })
 })
 
+app.route("/addToCart").post(function(req, res) {
+
+
+    var user = null;
+
+    if (!req.session.isLoggedIn) {
+        res.status(401).json({ status: false, message: "please login", data: null });
+        return;
+    }
+
+    user = req.session.user;
+
+    //* get the id of product
+    var product_id = req.body.product_id;
+    var product_image = req.body.product_image;
+    var product_name = req.body.product_name;
+    var product_description = req.body.product_description;
+
+    cartModel.create({
+        product_id: product_id,
+        product_image: product_image,
+        product_name: product_name,
+        product_description: product_description,
+        user_id: user._id,
+    }).then(function() {
+        res.status(200).json({ status: true, message: "chal gaya", data: null})
+    })
+})
+
+app.route("/viewCart").post(function(req, res) {
+    var user = null;
+
+    if (!req.session.isLoggedIn) {
+        res.status(401).json({ status: false, message: "please login", data: null });
+        return;
+    }
+
+    user = req.session.user;
+    // var cartDetails = null;
+    // cartModel.find({user_id: user._id}, function(err, docs) {
+    //     if (err) {
+    //         res.end("Something bad happened");
+    //     } else {
+    //         cartDetails = docs;
+    //         res.render("cart", {cartDetails: cartDetails});
+    //     }
+    // })
+    res.status(200).json({ status: true, message: "chal gaya", data: null })
+})
+
+app.get("/cart", function(req, res) {
+    var cartDetails = null;
+    cartModel.find({user_id: req.session.user._id}, function(err, docs) {
+        if (err) {
+            res.end("Something bad happened");
+        } else {
+            cartDetails = docs;
+            res.render("cart", {cartDetails: cartDetails});
+        }
+    })
+})
+
+app.route("/updateCart").post(function(req, res) {
+    var user = req.session.user;
+    var product_id = req.body.product_id;
+    var quantity = req.body.quantity;
+
+    if (quantity == 0) {
+        res.redirect("/deleteCartItem");
+    }
+    // var requiredId = null;
+
+    // cartModel.findOne({user_id: user._id}, {product_id: product_id}, async function(item) {
+    //     if(item) {
+    //         await cartModel.updateOne({_id: item._id}, {$set: {quantity: Number(quantity)}});
+    //         res.send();
+    //     } else {
+    //         res.send("something went wrong");
+    //     }
+    // })
+
+    // await cartModel.updateOne({$and: [{user_id: user._id}, {product_id: product_id}]}, {$set: {quantity: quantity}});
+    // res.send();
+    cartModel.findOne({user_id: user._id}, {product_id, product_id}).then(function(item) {
+        cartModel.findByIdAndUpdate(item._id, {quantity: quantity}, function(err, docs) {
+            if (err) {
+                res.end("something went wrong");
+            } else {
+                console.log(docs);
+                res.send();
+            }
+        })
+    })
+
+    // cartModel.findOneAndUpdate({_id: requiredId}, {quantity: quantity}, function(err, docs) {
+    //     console.log(err);
+    //     console.log(docs);
+    // });
+    // console.log(requiredId);
+
+
+    
+
+    // res.send();
+})
+
+app.post("/deleteCartItem", function(req, res) {
+
+})
+
+app.get("/logout", function(req, res) {
+    req.session.destroy();
+    res.redirect("/");
+})
+
 // app.get("/test", function(req, res) {
     
 // })
@@ -260,3 +384,20 @@ app.post("/changePassword", function(req, res) {
 app.listen(port, () => {
     console.log(`App listening at port number ${port}`);
 })
+
+
+// ADMIN SIDE
+
+const adminRoutes = require("./routes/admin");
+
+app.use("/admin", function(req, res, next) {
+    // res.send("chal raha hai");
+    //* check session
+    //* if session, then if admin
+    //* if not then redirect to login
+
+    next();
+})
+
+app.use("/admin/auth", adminRoutes.auth);
+app.use("/admin/product", adminRoutes.product);

@@ -1,90 +1,33 @@
-<%- include("./partials/header", {name: name, pic: pic}) %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <%- include("./partials/header", {user: user}) %>
+<button onclick="viewCart()" id="viewCartBtn">View Cart</button>
 
 <ul id="productList">
-
     <% for (var i = 0; i < 5 && i < products.length; i++) { %>
-        <li>
+        <li class="product">
             <h4> <%= products[i].name%> </h4>
             <h4> <%= products[i].price%> </h4>
             <span style="display: none;" > <%= products[i].description%> </span>
-            <button onclick="showDesc(event)"> View Description
-            </button>
+            <div class="product-buttons">
+                <button onclick="showDesc(event)"> View Description
+                </button>
+                <button class="addToCartBtn" id="<%= products[i]._id%>">Add to cart</button>
+            </div>
         </li>
     <% }%>
-
 </ul>
 
 <button id="loadMoreBtn">Load More</button>
 
-<h1>Welcome to the homepage</h1>
-
-<script>
-    var productList = document.getElementById("productList");
-    var loadMoreBtn = document.getElementById("loadMoreBtn");
-    var viewDescriptionBtn = document.getElementById("viewDescriptionBtn");
-    var indexCount = 5;
-
-    function showDesc(event) {
-        var parent = event.target.parentNode;
-        // console.log(parent)
-        var descriptionText = parent.children[2];
-
-        if (event.target.classList.contains("clicked")) {
-            descriptionText.style.display = "none";
-            event.target.classList.remove("clicked");
-            event.target.innerHTML = "View Description"
-        } else {
-            descriptionText.style.display = "block";
-            event.target.classList.add("clicked");
-            event.target.innerHTML = "Hide Description"
-        }
-    }
-
-    loadMoreBtn.addEventListener("click", function() {
-        var request = new XMLHttpRequest();
-        request.open("GET", "/loadMore");
-        request.send();
-
-        request.addEventListener("load", function() {
-            // console.log(JSON.parse(request.responseText));
-            var moreProducts = JSON.parse(request.responseText);
-            // console.log(moreProducts);
-
-            var start = indexCount;
-
-            for (var i = start; i < moreProducts.length && i < (start+5); i++) {
-                var li = document.createElement("li");
-                var prodName = document.createElement("h4");
-                var prodPrice = document.createElement("h4");
-                var prodDesc = document.createElement("span");
-                var viewDescBtn = document.createElement("button");
-
-                prodName.innerHTML = moreProducts[i].name;
-                prodPrice.innerHTML = moreProducts[i].price;
-                
-                prodDesc.innerHTML = moreProducts[i].description;
-                prodDesc.setAttribute("style", "display: none")
-
-                viewDescBtn.innerHTML = "View Description";
-                viewDescBtn.setAttribute("onclick", "showDesc(event)");
-
-                li.appendChild(prodName);
-                li.appendChild(prodPrice);
-                li.appendChild(prodDesc);
-                li.appendChild(viewDescBtn);
-
-                productList.appendChild(li);
-                indexCount++;
-            }
-
-            // moreProducts.forEach(function(product, index) {
-            //     indexCount++;
-            //     if (index >=5 && index > indexCount) {
-                    
-            //     }
-            // })
-            
-        })
-    })
-
-</script>
+<script src="/scripts/home.js"></script>
+</body>
+</html>

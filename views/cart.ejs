@@ -1,0 +1,16 @@
+<a href="/">Go back to the products page</a>
+<ul>
+    <% cartDetails.forEach(function(product) {%>
+        <li class="cartProduct">
+            <span style="display: none;"> <%= product.user_id%> </span>
+            <h2> <%= product.product_name%> </h2>
+            <h3> <%= product.product_id%> </h3>
+            <h3> <%= product.quantity%> </h3>
+            <button class="decrementItemBtn">-</button>
+            <button class="incrementItemBtn">+</button>
+            <button class="removeProductBtn">Remove from cart</button>
+        </li>
+    <% })%>
+</ul>
+
+<script src="/scripts/cartPage.js"></script>

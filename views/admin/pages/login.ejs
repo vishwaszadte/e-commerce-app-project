@@ -1,0 +1,12 @@
+<div>
+    <h1>Admin details are hardcoded in the db, for now use credentials username: admin1, password:admin1</h1>
+    <form action="/admin/auth/login" method="post">
+        <input required placeholder="Enter username" type="text" name="username">
+        <input required placeholder="Enter password" type="password" name="password">
+        <input type="submit" value="Login">
+    </form>
+    <!-- <a href="/forgotPassword">Forgot password?</a> -->
+    <% if (error) {%>
+        <h2> <%= error%> </h2>
+    <% }%>
+</div>

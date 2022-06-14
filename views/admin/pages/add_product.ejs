@@ -1,0 +1,32 @@
+<div>
+    <form method="post" action="/admin/product">
+        <label for="productName">Product Name</label>
+        <input required type="text" name="productName" placeholder="Enter product name">
+        <label for="productDescription">Product Description</label>
+        <input required type="text" name="productDescription" placeholder="Describe the product">
+        <label for="productPrice">Product Price</label>
+        <input required type="number" name="productPrice" placeholder="Price of the product">
+        <label for="productStock">Stock/Quantity</label>
+        <input required type="number" name="productStock" placeholder="Stock">
+        <label for="productCategory">Category</label>
+        <input required type="text" name="productCategory" placeholder="Category">
+        <input type="submit" value="Add product">
+    </form>
+    <% if (error) {%>
+        <h1> <%= error%> </h1>
+    <% }%>
+</div>
+
+<ul>
+    <% products.forEach(function(product) { %>
+        <li >
+            <h3> <%= product.name%> </h3>
+            <p> <%= product.description%> </p>
+            <h4>₹ <%= product.price%>/- </h4>
+            <h5>Available qty: <%= product.stock%> </h5>
+            <button class="updateBtn" id="<%= product._id%>">Update</button>
+            <button class="deleteBtn" id="<%= product._id%>">delete</button>
+        </li>
+    <% })%>
+    <script src="scripts/admin_product.js"></script>
+</ul>
