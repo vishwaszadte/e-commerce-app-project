@@ -166,7 +166,7 @@ app.route("/signup").get(function(req, res) {
         userType: userRoleEnums.customer
     }).then(function() {
 
-        var html = '<h1>Click <a href="http://localhost:3000/verifyUser/'+username+'">here</a> to verify your email</h1>'
+        var html = '<h1>Click <a href="http://e-commerce-web-app-vz.herokuapp.com/verifyUser/'+username+'">here</a> to verify your email</h1>'
 
         sendMail(username, 
             "welcome to Ecommerce app", "Please verify your email",
@@ -196,7 +196,7 @@ app.get("/forgotPassword", function(req, res) {
 app.post("/sendPasswordMail", function(req, res) {
     const username = req.body.username;
 
-    var html = '<h1>Click <a href="http://localhost:3000/newPassword/'+username+'">here</a> to change your password</h1>'
+    var html = '<h1>Click <a href="http://e-commerce-web-app-vz.herokuapp.com/newPassword/'+username+'">here</a> to change your password</h1>'
 
     sendMail(username, 
         "Change your password", "Please verify your email",
