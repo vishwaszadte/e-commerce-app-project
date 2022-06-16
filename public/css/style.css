@@ -4,6 +4,17 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.user-profile-pic {
+    width: 50px;
+    height: auto;
+}
+
+.header {
+    width: 500px;
+    display: flex;
+    justify-content: space-around;
+}
+
 .product {
     width: 400px;
     background-color: #D3EBCD;

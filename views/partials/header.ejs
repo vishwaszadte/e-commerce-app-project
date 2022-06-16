@@ -1,8 +1,10 @@
 <div>
     <% if (user && user.userType === 2) {%>
-        <h3><%= user.username %></h3>
-        <img src=" <%= user.profile_pic %> " alt="">
-        <button><a href="/logout">Logout</a></button>
+        <div class="header">
+            <h3><%= user.username %></h3>
+            <img class="user-profile-pic" src=" <%= user.profile_pic %> " alt="">
+            <button><a href="/logout">Logout</a></button>
+        </div>
     <% } else {%>
         <a href="/auth">login</a>
     <% }%>
