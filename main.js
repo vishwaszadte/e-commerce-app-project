@@ -43,8 +43,6 @@ app.use(session({
     saveUninitialized: true
 }))
 app.use(express.json());
-app.use(cors());
-
 
 // multer
 const storage = multer.diskStorage({
