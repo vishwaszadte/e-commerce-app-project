@@ -8,26 +8,31 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <%- include("./partials/header", {user: user}) %>
-<button onclick="viewCart()" id="viewCartBtn">View Cart</button>
+    
 
-<ul id="productList">
-    <% for (var i = 0; i < 5 && i < products.length; i++) { %>
-        <li class="product">
-            <h4> <%= products[i].name%> </h4>
-            <h4> <%= products[i].price%> </h4>
-            <span style="display: none;" > <%= products[i].description%> </span>
-            <div class="product-buttons">
-                <button onclick="showDesc(event)"> View Description
-                </button>
-                <button class="addToCartBtn" id="<%= products[i]._id%>">Add to cart</button>
-            </div>
-        </li>
-    <% }%>
-</ul>
-
-<button id="loadMoreBtn">Load More</button>
-
-<script src="/scripts/home.js"></script>
+    <div class="container">
+        <div class="header">
+            <%- include("./partials/header", {user: user}) %>
+            <button onclick="viewCart()" id="viewCartBtn">View Cart</button>
+        </div>
+        
+        <ul id="productList" class="productList">
+            <% for (var i = 0; i < 5 && i < products.length; i++) { %>
+                <li class="product">
+                    <h4> <%= products[i].name%> </h4>
+                    <h4> <%= products[i].price%> </h4>
+                    <span style="display: none;" > <%= products[i].description%> </span>
+                    <div class="product-buttons">
+                        <button onclick="showDesc(event)"> View Description
+                        </button>
+                        <button class="addToCartBtn" id="<%= products[i]._id%>">Add to cart</button>
+                    </div>
+                </li>
+            <% }%>
+        </ul>
+        <button id="loadMoreBtn">Load More</button>
+    </div>
+    
+    <script src="/scripts/home.js"></script>
 </body>
 </html>

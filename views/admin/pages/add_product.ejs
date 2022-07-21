@@ -1,32 +1,46 @@
-<div>
-    <form method="post" action="/admin/product">
-        <label for="productName">Product Name</label>
-        <input required type="text" name="productName" placeholder="Enter product name">
-        <label for="productDescription">Product Description</label>
-        <input required type="text" name="productDescription" placeholder="Describe the product">
-        <label for="productPrice">Product Price</label>
-        <input required type="number" name="productPrice" placeholder="Price of the product">
-        <label for="productStock">Stock/Quantity</label>
-        <input required type="number" name="productStock" placeholder="Stock">
-        <label for="productCategory">Category</label>
-        <input required type="text" name="productCategory" placeholder="Category">
-        <input type="submit" value="Add product">
-    </form>
-    <% if (error) {%>
-        <h1> <%= error%> </h1>
-    <% }%>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div>
+        <form method="post" action="/admin/product">
+            <label for="productName">Product Name</label>
+            <input required type="text" name="productName" placeholder="Enter product name">
+            <label for="productDescription">Product Description</label>
+            <input required type="text" name="productDescription" placeholder="Describe the product">
+            <label for="productPrice">Product Price</label>
+            <input required type="number" name="productPrice" placeholder="Price of the product">
+            <label for="productStock">Stock/Quantity</label>
+            <input required type="number" name="productStock" placeholder="Stock">
+            <label for="productCategory">Category</label>
+            <input required type="text" name="productCategory" placeholder="Category">
+            <input type="submit" value="Add product">
+        </form>
+        <% if (error) {%>
+            <h1> <%= error%> </h1>
+        <% }%>
+    </div>
+    
+    <ul>
+        <% products.forEach(function(product) { %>
+            <li >
+                <h3> <%= product.name%> </h3>
+                <p> <%= product.description%> </p>
+                <h4>₹ <%= product.price%>/- </h4>
+                <h5>Available qty: <%= product.stock%> </h5>
+                <button class="updateBtn" id="<%= product._id%>">Update</button>
+                <button class="deleteBtn" id="<%= product._id%>">delete</button>
+            </li>
+        <% })%>
+        <script src="scripts/admin_product.js"></script>
+    </ul>
+</body>
+</html>
 
-<ul>
-    <% products.forEach(function(product) { %>
-        <li >
-            <h3> <%= product.name%> </h3>
-            <p> <%= product.description%> </p>
-            <h4>₹ <%= product.price%>/- </h4>
-            <h5>Available qty: <%= product.stock%> </h5>
-            <button class="updateBtn" id="<%= product._id%>">Update</button>
-            <button class="deleteBtn" id="<%= product._id%>">delete</button>
-        </li>
-    <% })%>
-    <script src="scripts/admin_product.js"></script>
-</ul>
+
