@@ -36,7 +36,7 @@ db.init();
 //middlewares
 app.use(express.static("uploads"))
 app.use(express.static("public"))
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: "secret secret",
     resave: false,
