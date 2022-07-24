@@ -59,29 +59,6 @@ body {
     display: flex;
 }
 
-@media only screen and (max-width: 500px) {
-
-    .header {
-        width: 260px;
-        flex-direction: column;
-    }
-
-    .product {
-        width: 260px;
-    }
-}
-
-@media only screen and (max-width: 300px) {
-    .header {
-        width: 200px;
-    }
-
-    .product {
-        width: 200px;
-        border-radius: 40px;
-    }
-}
-
 /* -------------------------------------------------- */
 
 /* ------------------AUTH PAGE----------------------- */
@@ -104,12 +81,13 @@ body {
     border-radius: 20px;
 }
 
-a {
+
+.loginBtnAuthPage a, .signupBtnAuthPage a {
     color: black;
     text-decoration: none;
 }
 
-.loginBtnAuthPage {
+.loginBtnAuthPage, .loginPageContainer form .loginBtn {
     width: 100%;
     height: 50px;
     border: none;
@@ -118,7 +96,7 @@ a {
     text-decoration: none;
 }
 
-.loginBtnAuthPage:hover {
+.loginBtnAuthPage:hover, .loginPageContainer form .loginBtn:hover {
     background-color: #958f7d;
     cursor: pointer;
 }
@@ -149,19 +127,68 @@ a {
 
     /* style */
     background-color: #81CACF;
-    height: 200px;
-    width: 400px;
+    height: 190px;
+    width: 350px;
     padding: 15px;
     border-radius: 30px;
-    justify-content: center ;
+    justify-content: space-around;
 
     display: flex;
     flex-direction: column;
 }
 
 .loginPageContainer form {
-    height: 80px;
+    height: 140px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.loginPageContainer form input {
+    border: none;
+    height: 32px;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.loginPageContainer form input:focus {
+    outline: none;
+}
+
+
+
+
+
+
+
+/* ----------------RESPONSIVE DESIGN------------- */
+@media only screen and (max-width: 500px) {
+
+    .header {
+        width: 260px;
+        flex-direction: column;
+    }
+
+    .product {
+        width: 260px;
+    }
+
+    .loginPageContainer {
+        width: 260px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .header {
+        width: 200px;
+    }
+
+    .product {
+        width: 200px;
+        border-radius: 40px;
+    }
+
+    .loginPageContainer {
+        width: 200px;
+    }
 }

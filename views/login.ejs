@@ -12,10 +12,13 @@
         <form action="/login" method="post">
             <input required placeholder="Enter email" type="email" name="username">
             <input required placeholder="Enter password" type="password" name="password">
-            <input type="submit" value="Login">
+            <input class="loginBtn" type="submit" value="Login">
         </form>
-        <a href="/forgotPassword">Forgot password?</a>
-        <a href="/admin/auth/login">Admin Login</a>
+        <div>
+            <a href="/forgotPassword">Forgot password?</a>
+            <a href="/admin/auth/login">Admin Login</a>
+        </div>
+        
         <% if (error) {%>
             <h2> <%= error%> </h2>
         <% }%>
