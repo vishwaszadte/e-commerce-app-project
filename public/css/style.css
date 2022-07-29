@@ -34,7 +34,7 @@ body {
 
 .viewDescBtn {
     border: none;
-    color: #F9F9F9;
+    color: #141E61;
     /* border: 1px solid #355764; */
     width: 170px;
     height: 30px;
@@ -79,7 +79,8 @@ body {
     align-items: flex-end;
 }
 
-.product {
+.product { 
+    color: #FFFBE7;
     width: 300px;
     background-color: #b796f6;
     align-items: center;
@@ -88,7 +89,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    border-radius: 20px;
+    border-radius: 30px;
     padding: 5px;
     box-shadow: 5px 5px #888888;
 }
