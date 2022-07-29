@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    
-
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <%- include("./partials/header", {user: user}) %>
-            <button onclick="viewCart()" id="viewCartBtn">View Cart</button>
-        </div>
-        
-        <ul id="productList" class="productList">
-            <% for (var i = 0; i < 5 && i < products.length; i++) { %>
-                <li class="product">
-                    <h4> <%= products[i].name%> </h4>
-                    <h4> <%= products[i].price%> </h4>
-                    <span style="display: none;" > <%= products[i].description%> </span>
-                    <div class="product-buttons">
-                        <button onclick="showDesc(event)"> View Description
-                        </button>
-                        <button class="addToCartBtn" id="<%= products[i]._id%>">Add to cart</button>
-                    </div>
-                </li>
-            <% }%>
-        </ul>
-        <button id="loadMoreBtn">Load More</button>
+      <div class="header">
+        <%- include("./partials/header", {user: user}) %>
+        <button onclick="viewCart()" id="viewCartBtn">View Cart</button>
+      </div>
+
+      <ul id="productList" class="productList">
+        <% for (var i = 0; i < 5 && i < products.length; i++) { %>
+        <li class="product">
+          <h4><%= products[i].name%></h4>
+          <h4><%= products[i].price%></h4>
+          <span style="display: none"> <%= products[i].description%> </span>
+          <div class="product-buttons">
+            <button class="viewDescBtn" onclick="showDesc(event)">
+              View Description
+            </button>
+            <button class="addToCartBtn" id="<%= products[i]._id%>">
+              Add to cart
+            </button>
+          </div>
+        </li>
+        <% }%>
+      </ul>
+      <button id="loadMoreBtn">Load More</button>
     </div>
-    
+
     <script src="/scripts/home.js"></script>
-</body>
+  </body>
 </html>
