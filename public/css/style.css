@@ -162,7 +162,7 @@ body {
     border-radius: 20px;
 }
 
-.signupBtnAuthPage:hover {
+.signupBtnAuthPage:hover, .signupBtn:hover {
     background-color: lightgray;
     cursor: pointer;
 }
@@ -197,22 +197,74 @@ body {
     justify-content: space-between;
 }
 
-.loginPageContainer form input {
+.loginPageContainer form input, .signupPageContainer form input, .adminLoginContainer form input {
     border: none;
     height: 32px;
     border-radius: 5px;
     padding: 2px;
 }
 
-.loginPageContainer form input:focus {
+.loginPageContainer form input:focus, .signupPageContainer form input:focus, .adminLoginContainer form input:focus {
     outline: none;
 }
 
 
+/* ----------------------------------------- */
 
+/* --------------SIGNUP PAGE---------------- */
 
+.signupPageContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
+    background-color: #81CACF;
+    height: 190px;
+    width: 350px;
+    padding: 15px;
+    border-radius: 30px;
+}
 
+.signupPageContainer form {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+/* ------------------------------------------------- */
+
+/* -----------ADMIN LOGIN PAGE------------------- */
+.adminLoginContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #81CACF;
+    /* height: 150px; */
+    width: 350px;
+    padding: 15px;
+    border-radius: 30px;
+}
+
+.adminLoginContainer form {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.adminLoginBtn {
+    background-color: #ECB390;
+}
+
+.adminLoginBtn:hover {
+    background-color: #FF5D5D;
+}
+
+/* ------------------------------------------------- */
 
 /* ----------------RESPONSIVE DESIGN------------- */
 @media only screen and (max-width: 500px) {
@@ -226,7 +278,7 @@ body {
         width: 260px;
     }
 
-    .loginPageContainer {
+    .loginPageContainer, .signupPageContainer, .adminLoginContainer {
         width: 260px;
     }
 }
@@ -241,7 +293,9 @@ body {
         border-radius: 40px;
     }
 
-    .loginPageContainer {
+    .loginPageContainer, .signupPageContainer, .adminLoginContainer {
         width: 200px;
     }
 }
+
+
