@@ -176,7 +176,7 @@ app
       })
       .then(function () {
         var html =
-          '<h1>Click <a href="http://e-commerce-web-app-vz.herokuapp.com/verifyUser/' +
+          '<h1>Click <a href="https://vcfav2myk1.execute-api.us-east-2.amazonaws.com//verifyUser/' +
           username +
           '">here</a> to verify your email</h1>';
 
@@ -212,7 +212,7 @@ app.post("/sendPasswordMail", function (req, res) {
   const username = req.body.username;
 
   var html =
-    '<h1>Click <a href="http://e-commerce-web-app-vz.herokuapp.com/newPassword/' +
+    '<h1>Click <a href="https://vcfav2myk1.execute-api.us-east-2.amazonaws.com//newPassword/' +
     username +
     '">here</a> to change your password</h1>';
 
